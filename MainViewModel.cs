@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using MauiAppWearOsPicking.Messages;
 using System.Collections.ObjectModel;
 
 namespace MauiAppWearOsPicking
 {
-    public partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel, IRecipient<ScannerMessage>
     {
 
         [ObservableProperty]
@@ -25,10 +27,10 @@ namespace MauiAppWearOsPicking
             if(current == 0)
             {
                 Pickings.Clear();
-                Pickings.Add(new Picking("001", "Latte 1l", "Location A", 5));
-                Pickings.Add(new Picking("002", "Burro 500g", "Location B", 3));
-                Pickings.Add(new Picking("003", "Yogurt 30g", "Location C", 1));
-                Pickings.Add(new Picking("004", "Taleggio 100g", "Location E", 6));
+                Pickings.Add(new Picking("1234567890123", "001", "Latte 1l", "Location A", 5));
+                Pickings.Add(new Picking("2234567890123", "002", "Burro 500g", "Location B", 3));
+                Pickings.Add(new Picking("3234567890123", "003", "Yogurt 30g", "Location C", 1));
+                Pickings.Add(new Picking("4234567890123", "004", "Taleggio 100g", "Location E", 6));
             }
 
             CurrentPicking = Pickings[current];
@@ -57,6 +59,17 @@ namespace MauiAppWearOsPicking
                 current = 0;
                 FillData();
             }
+        }
+
+        public async void Receive(ScannerMessage message)
+        {
+            System.Diagnostics.Debug.WriteLine(message != null ? message.Value : "MainViewModel");
+
+            if(CurrentPicking.Barcode == message.Value)
+            {
+                await PickAsync();
+            }
+          
         }
     }
 }

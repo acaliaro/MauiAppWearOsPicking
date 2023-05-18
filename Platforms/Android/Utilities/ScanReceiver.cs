@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Util;
 using CommunityToolkit.Mvvm.Messaging;
+using MauiAppWearOsPicking.Messages;
 
 namespace MauiAppWearOsPicking.Platforms.Android.Utilities
 {
@@ -60,5 +61,6 @@ namespace MauiAppWearOsPicking.Platforms.Android.Utilities
             System.Diagnostics.Debug.WriteLine("HandleScannedBarcode barcodeContentString = " + barcodeContentString, "ScanReceiver");
             //WeakReferenceMessenger.Default.Send(new ScannerMessage(barcodeContentString, symbologyString));
         }
+      
     }
 }

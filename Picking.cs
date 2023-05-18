@@ -4,6 +4,10 @@ namespace MauiAppWearOsPicking
 {
     public partial class Picking : ObservableObject
     {
+
+        [ObservableProperty]
+        string barcode;
+
         [ObservableProperty]
         string codice;
 
@@ -19,10 +23,12 @@ namespace MauiAppWearOsPicking
         [ObservableProperty]
         int quantitaPicked;
 
+        
         public Picking() { }
 
-        public Picking(string codice, string descrizione, string locazione, int quantita)
+        public Picking(string barcode, string codice, string descrizione, string locazione, int quantita)
         {
+            Barcode = barcode;
             Codice = codice;
             Descrizione = descrizione;
             Locazione = locazione;
