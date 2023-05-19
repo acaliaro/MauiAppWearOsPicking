@@ -59,7 +59,7 @@ namespace MauiAppWearOsPicking.Platforms.Android.Utilities
             string symbologyString = i.GetStringExtra(EXTRA_SYMBOLOGY_STRING);
 
             System.Diagnostics.Debug.WriteLine("HandleScannedBarcode barcodeContentString = " + barcodeContentString, "ScanReceiver");
-            //WeakReferenceMessenger.Default.Send(new ScannerMessage(barcodeContentString, symbologyString));
+            WeakReferenceMessenger.Default.Send(new ScannerMessage(barcodeContentString));
         }
       
     }

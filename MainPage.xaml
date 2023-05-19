@@ -1,34 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="MauiAppWearOsPicking.MainPage"
-    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:MauiAppWearOsPicking"
     x:DataType="viewmodel:MainViewModel"
     Shell.NavBarIsVisible="False">
 
     <StackLayout VerticalOptions="Center">
 
+        <StackLayout.Triggers>
+            <DataTrigger
+                Binding="{Binding Status}"
+                TargetType="StackLayout"
+                Value="0">
+                <Setter Property="BackgroundColor" Value="Black" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Status}"
+                TargetType="StackLayout"
+                Value="1">
+                <Setter Property="BackgroundColor" Value="Red" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Status}"
+                TargetType="StackLayout"
+                Value="2">
+                <Setter Property="BackgroundColor" Value="LawnGreen" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Status}"
+                TargetType="StackLayout"
+                Value="3">
+                <Setter Property="BackgroundColor" Value="White" />
+            </DataTrigger>
+        </StackLayout.Triggers>
+
         <Label
             FontSize="20"
             HorizontalOptions="Center"
+            IsVisible="{Binding IsPicking}"
             Text="{Binding CurrentPicking.Locazione}" />
 
         <Label
             FontSize="30"
             HorizontalOptions="Center"
+            IsVisible="{Binding IsPicking}"
             Text="{Binding CurrentPicking.Descrizione}" />
 
-        <HorizontalStackLayout HorizontalOptions="Center">
+        <HorizontalStackLayout HorizontalOptions="Center" IsVisible="{Binding IsPicking}">
 
             <Label
                 FontSize="50"
                 HorizontalOptions="Center"
                 Text="{Binding CurrentPicking.QuantitaPicked}" />
-            
+
             <Label FontSize="50" Text="/" />
-            
+
             <Label
                 FontSize="50"
                 HorizontalOptions="Center"
@@ -36,7 +65,12 @@
 
         </HorizontalStackLayout>
 
-        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="4" Margin="20,0">
+        <Grid
+            Margin="20,0"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="4"
+            IsVisible="{Binding IsPicking}"
+            RowDefinitions="Auto">
             <Button
                 Grid.Row="0"
                 Grid.Column="0"
@@ -49,6 +83,19 @@
                 Text="Skip" />
         </Grid>
 
+        <Label
+            FontSize="30"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsPicking, Converter={x:StaticResource InvertedBoolConverter}}"
+            Text="Picking concluso"
+            TextColor="Black" />
+
+        <Button
+            Margin="20,0"
+            Command="{Binding OkCommand}"
+            IsVisible="{Binding IsPicking, Converter={x:StaticResource InvertedBoolConverter}}"
+            Text="Ok" />
 
     </StackLayout>
 
